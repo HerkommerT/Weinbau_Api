@@ -6,7 +6,7 @@ CORS(app)  # Dies erlaubt alle Ursprünge. Du kannst dies anpassen, um spezifisc
 
 incomes = [
     { 'description': 'salary', 'amount': 5000 }
-]
+] 
 
 @app.route('/incomes')
 def get_incomes():

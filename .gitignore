@@ -10,7 +10,6 @@ package.json
 
 package-lock.json
 
-.DS_Store
-Thumbs.db
+*.db
 
 *.bat

@@ -24,3 +24,19 @@ def add_wein():
     db.session.commit()
 
     return jsonify({'message': 'Wein added', 'wein_id': new_wein.wein_id}), 201
+
+@wein_bp.route('/weine', methods=['GET'])
+def get_weine():
+    try:
+        weine = Wein.query.all()
+        weine_list = [{
+            'wein_id': wein.wein_id,
+            'name': wein.name,
+            'jahrgang': wein.jahrgang,
+            'preis': wein.preis,
+            'weingut_id': wein.weingut_id
+        } for wein in weine]
+        return jsonify(weine_list)
+    except Exception as e:
+        # Fangen Sie alle Ausnahmen und geben Sie eine Fehlermeldung zurück
+        return jsonify({'error': str(e)}), 500

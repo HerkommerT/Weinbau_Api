@@ -1,8 +1,4 @@
-# models.py
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
-
+from extensions import db
 class Weingut(db.Model):
     __tablename__ = 'weingut'
     weingut_id = db.Column(db.Integer, primary_key=True)

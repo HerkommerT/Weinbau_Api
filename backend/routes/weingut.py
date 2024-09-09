@@ -17,3 +17,17 @@ def add_weingut():
     db.session.commit()
 
     return jsonify({'message': 'Weingut added', 'weingut_id': new_weingut.weingut_id}), 201    
+
+@weingut_bp.route('/get_weingut' ,methods=['GET'])
+def get_weingut():
+    try:
+        weingueter = Weingut.query.all()
+        weingueter_list = [{
+             'weingut_id': weingut.weingut_id,
+             'land' : weingut.land
+        } for weingut in weingueter]
+        return jsonify(weingueter_list)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+       
+        

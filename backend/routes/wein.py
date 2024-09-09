@@ -25,7 +25,7 @@ def add_wein():
 
     return jsonify({'message': 'Wein added', 'wein_id': new_wein.wein_id}), 201
 
-@wein_bp.route('/weine', methods=['GET'])
+@wein_bp.route('/get_wein', methods=['GET'])
 def get_weine():
     try:
         weine = Wein.query.all()

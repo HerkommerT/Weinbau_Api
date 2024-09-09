@@ -17,12 +17,12 @@ const Home = () => (
 );
 
 const Menu = () => {
-    const [incomes, setIncomes] = useState([]);
+    const [weingueter, setWeingueter] = useState([]);
 
     // useEffect wird verwendet, um die Daten beim Laden der Komponente zu holen
     useEffect(() => {
-        // GET-Anfrage an die Flask-API mit fetch, um die Einkommensdaten zu erhalten
-        fetch('http://127.0.0.1:5000/incomes')
+        // GET-Anfrage an die Flask-API mit fetch, um die Weingut-Daten zu erhalten
+        fetch('http://127.0.0.1:5000/get_weingut')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -31,7 +31,7 @@ const Menu = () => {
             })
             .then(data => {
                 // Die erhaltenen Daten werden im Zustand gespeichert
-                setIncomes(data);
+                setWeingueter(data);
             })
             .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
@@ -41,10 +41,10 @@ const Menu = () => {
     return (
         <div>
             <h1>Menu Page</h1>
-            {/* Anzeige der Einkommensdaten in einer DataTable */}
-            <DataTable value={incomes}>
-                <Column field="description" header="Description"></Column>
-                <Column field="amount" header="Amount"></Column>
+            {/* Anzeige der Daten in einer DataTable */}
+            <DataTable value={weingueter}>
+                <Column field="weingut_id" header="Weingut ID"></Column>
+                <Column field="land" header="Land"></Column>
             </DataTable>
             <Link to="/">
                 <Button label="Go to Home" />

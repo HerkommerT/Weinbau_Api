@@ -89,67 +89,17 @@ const Menu = () => {
             });
     };
 
-    const MyToolbar = () => {
-        const [dialogVisible, setDialogVisible] = useState(false);
-    
-        const handleDialogOpen = () => {
-            setDialogVisible(true);
-        };
-    
-        const handleDialogClose = () => {
-            setDialogVisible(false);
-        };
-    
-        const start = (
-            <React.Fragment>
-                <Button label="Add Wein" icon="pi pi-plus" onClick={handleDialogOpen} />
-            </React.Fragment>
-        );
-    
+    const startToolbarTemplate = () => {
         return (
-        <div>
-        <Toolbar start={start} />
-                
-        {dialogVisible && (
-            <Dialog header="Add New Wein" visible={dialogVisible} style={{ width: '50vw' }} footer={<Button label="Close" icon="pi pi-times" onClick={handleDialogClose} />} onHide={handleDialogClose}>
-                <form onSubmit={handleSubmit}>
-                    <div className="p-field">
-                        <label htmlFor="name">Name</label>
-                        <input id="name" name="name" value={newWein.name} onChange={handleInputChange} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="beschr">Beschreibung</label>
-                        <input id="beschr" name="beschr" value={newWein.beschr} onChange={handleInputChange} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="preis">Preis</label>
-                        <input id="preis" name="preis" value={newWein.preis} onChange={handleInputChange} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="weingut_id">Weingut ID</label>
-                        <input id="weingut_id" name="weingut_id" value={newWein.weingut_id} onChange={handleInputChange} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="typ_id">Typ ID</label>
-                        <input id="typ_id" name="typ_id" value={newWein.typ_id} onChange={handleInputChange} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="art_id">Art ID</label>
-                        <input id="art_id" name="art_id" value={newWein.art_id} onChange={handleInputChange} />
-                    </div>
-                    <Button type="submit" label="Submit" />
-                </form>
-            </Dialog>
-                )}
-        </div>
+            <Button label="Add Wein" icon="pi pi-plus" onClick={handleDialogOpen} />
         );
     };
 
     return (
         <div>
             <h1>Menu Page</h1>
-            <MyToolbar />
-            <Button label="Add Wein" icon="pi pi-plus" onClick={handleDialogOpen} />
+            <Toolbar start={startToolbarTemplate} />
+
 
             <DataTable value={wein}>
                 <Column field="wein_id" header="Wein ID" />

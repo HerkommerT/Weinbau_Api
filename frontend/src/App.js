@@ -17,12 +17,12 @@ const Home = () => (
 );
 
 const Menu = () => {
-    const [weingueter, setWeingueter] = useState([]);
+    const [wein, setWeingueter] = useState([]);
 
     // useEffect wird verwendet, um die Daten beim Laden der Komponente zu holen
     useEffect(() => {
         // GET-Anfrage an die Flask-API mit fetch, um die Weingut-Daten zu erhalten
-        fetch('http://127.0.0.1:5000/get_weingut')
+        fetch('http://127.0.0.1:5000/wein')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -42,9 +42,14 @@ const Menu = () => {
         <div>
             <h1>Menu Page</h1>
             {/* Anzeige der Daten in einer DataTable */}
-            <DataTable value={weingueter}>
+            <DataTable value={wein}>
+                <Column field="wein_id" header="Wein ID"></Column>
+                <Column field="name" header="">Name</Column>
+                <Column field="beschr" header="Beschreibung"></Column>
+                <Column field="preis" header="Preis"></Column>
                 <Column field="weingut_id" header="Weingut ID"></Column>
-                <Column field="land" header="Land"></Column>
+                <Column field="typ_id" header="Typ ID"></Column>
+                <Column field="art_id" header="Art ID"></Column>
             </DataTable>
             <Link to="/">
                 <Button label="Go to Home" />

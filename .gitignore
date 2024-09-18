@@ -10,6 +10,7 @@ package.json
 
 package-lock.json
 
-backend/instance/database.db
+*.db
+
 
 *.bat

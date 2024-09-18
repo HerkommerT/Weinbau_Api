@@ -16,7 +16,7 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'  # Beispiel URI für SQLite
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database2.db'  # Beispiel URI für SQLite
 db.init_app(app)
 
 # Initialize CORS with default options (allow all origins)

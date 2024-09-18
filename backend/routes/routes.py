@@ -15,20 +15,34 @@ def add_wein():
     data = request.get_json()
     name = data.get('name')
     jahrgang = data.get('jahrgang')
+    beschr = data.get('beschr')
     preis = data.get('preis')
     weingut_id = data.get('weingut_id')
+    typ_id = data.get('typ_id')
+    art_id = data.get('art_id')
 
-    if not (name and preis and weingut_id):
-        return jsonify({'error': 'Name, Preis, and Weingut ID are required'}), 400
+    # Validierung: Name, Preis, Weingut ID, Typ ID und Art ID sind erforderlich
+    if not (name and preis and weingut_id and typ_id and art_id):
+        return jsonify({'error': 'Name, Preis, Weingut ID, Typ ID, and Art ID are required'}), 400
 
+    # Optional: Validierung des Jahrgangs und Preises
     if jahrgang and (jahrgang < 0 or preis < 0):
         return jsonify({'error': 'Invalid Jahrgang or Preis'}), 400
 
-    new_wein = Wein(name=name, jahrgang=jahrgang, preis=preis, weingut_id=weingut_id)
+    new_wein = Wein(
+        name=name,
+        jahrgang=jahrgang,
+        beschr=beschr,
+        preis=preis,
+        weingut_id=weingut_id,
+        typ_id=typ_id,
+        art_id=art_id
+    )
     db.session.add(new_wein)
     db.session.commit()
 
     return jsonify({'message': 'Wein added', 'wein_id': new_wein.wein_id}), 201
+
 
 @wein_bp.route('/wein', methods=['GET'])
 def get_weine():
@@ -37,10 +51,14 @@ def get_weine():
         'wein_id': wein.wein_id,
         'name': wein.name,
         'jahrgang': wein.jahrgang,
+        'beschr': wein.beschr,
         'preis': wein.preis,
-        'weingut_id': wein.weingut_id
+        'weingut_id': wein.weingut_id,
+        'typ_id': wein.typ_id,
+        'art_id': wein.art_id
     } for wein in weine]
     return jsonify(weine_list)
+
 
 @wein_bp.route('/wein/<int:wein_id>', methods=['GET'])
 def get_wein(wein_id):
@@ -49,16 +67,12 @@ def get_wein(wein_id):
         'wein_id': wein.wein_id,
         'name': wein.name,
         'jahrgang': wein.jahrgang,
+        'beschr': wein.beschr,
         'preis': wein.preis,
-        'weingut_id': wein.weingut_id
+        'weingut_id': wein.weingut_id,
+        'typ_id': wein.typ_id,
+        'art_id': wein.art_id
     })
-
-@wein_bp.route('/wein/<int:wein_id>', methods=['DELETE'])
-def delete_wein(wein_id):
-    wein = Wein.query.get_or_404(wein_id)
-    db.session.delete(wein)
-    db.session.commit()
-    return jsonify({'message': 'Wein deleted'})
 
 # CRUD-Routen für Weingut
 @weingut_bp.route('/weingut', methods=['POST'])

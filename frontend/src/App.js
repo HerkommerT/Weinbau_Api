@@ -9,7 +9,6 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-
 // Beispiel-Komponenten
 const Home = () => (
     <div>
@@ -32,21 +31,17 @@ const Menu = () => {
         art_id: ''
     });
 
+    // Funktion zum Abrufen der Weine
+    const fetchWeinList = () => {
+        fetch('http://127.0.0.1:5000/wein')
+            .then(response => response.json())
+            .then(data => setWeingueter(data))
+            .catch(error => console.error('Error fetching wine list:', error));
+    };
+
     // useEffect wird verwendet, um die Daten beim Laden der Komponente zu holen
     useEffect(() => {
-        fetch('http://127.0.0.1:5000/wein')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setWeingueter(data);
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
+        fetchWeinList(); // Initiales Laden der Weine
     }, []);
 
     const handleDialogClose = () => {
@@ -74,24 +69,22 @@ const Menu = () => {
             },
             body: JSON.stringify(newWein)
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setWeingueter([...wein, data]);
-                handleDialogClose();
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(() => {
+            fetchWeinList();  // Nach dem POST, nochmal die Weine neu laden
+            handleDialogClose();
+        })
+        .catch(error => console.error('There was a problem with the fetch operation:', error));
     };
 
     const startToolbarTemplate = () => {
         return (
-            <Button label="Add Wein" icon="pi pi-plus" onClick={handleDialogOpen} />
+            <Button label="Add Wein" icon="pi pi-plus" onClick={handleDialogOpen} className="p-button-success" />
         );
     };
 
@@ -99,7 +92,6 @@ const Menu = () => {
         <div>
             <h1>Menu Page</h1>
             <Toolbar start={startToolbarTemplate} />
-
 
             <DataTable value={wein}>
                 <Column field="wein_id" header="Wein ID" />
@@ -111,33 +103,50 @@ const Menu = () => {
                 <Column field="art_id" header="Art ID" />
             </DataTable>
 
-            <Dialog header="Add New Wein" visible={dialogVisible} style={{ width: '50vw' }} footer={<Button label="Close" icon="pi pi-times" onClick={handleDialogClose} />} onHide={handleDialogClose}>
-                <form onSubmit={handleSubmit}>
-                    <div className="p-field">
-                        <label htmlFor="name">Name</label>
-                        <input id="name" name="name" value={newWein.name} onChange={handleInputChange} />
+            <Dialog 
+                header="Add New Wein" 
+                visible={dialogVisible} 
+                style={{ width: '50vw' }} 
+                footer={
+                    <div>
+                        <Button type="submit" form="weinForm" label="Submit" className="p-button-success" />
+                        <Button label="Close" icon="pi pi-times" onClick={handleDialogClose} className="p-button-secondary" />
                     </div>
-                    <div className="p-field">
-                        <label htmlFor="beschr">Beschreibung</label>
-                        <input id="beschr" name="beschr" value={newWein.beschr} onChange={handleInputChange} />
+                }
+                onHide={handleDialogClose}
+            >
+                <form id="weinForm" onSubmit={handleSubmit}>
+                    <div className="p-fluid">
+                        <div className="p-field" style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                            <label htmlFor="name" style={{ marginRight: '1rem', width: '150px' }}>Name</label>
+                            <input id="name" name="name" value={newWein.name} onChange={handleInputChange} className="p-inputtext p-component" style={{ flex: 1 }} />
+                        </div>
+                        
+                        <div className="p-field" style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                            <label htmlFor="beschr" style={{ marginRight: '1rem', width: '150px' }}>Beschreibung</label>
+                            <input id="beschr" name="beschr" value={newWein.beschr} onChange={handleInputChange} className="p-inputtext p-component" style={{ flex: 1 }} />
+                        </div>
+
+                        <div className="p-field" style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                            <label htmlFor="preis" style={{ marginRight: '1rem', width: '150px' }}>Preis</label>
+                            <input id="preis" name="preis" value={newWein.preis} onChange={handleInputChange} className="p-inputtext p-component" style={{ flex: 1 }} />
+                        </div>
+
+                        <div className="p-field" style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                            <label htmlFor="weingut_id" style={{ marginRight: '1rem', width: '150px' }}>Weingut ID</label>
+                            <input id="weingut_id" name="weingut_id" value={newWein.weingut_id} onChange={handleInputChange} className="p-inputtext p-component" style={{ flex: 1 }} />
+                        </div>
+
+                        <div className="p-field" style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                            <label htmlFor="typ_id" style={{ marginRight: '1rem', width: '150px' }}>Typ ID</label>
+                            <input id="typ_id" name="typ_id" value={newWein.typ_id} onChange={handleInputChange} className="p-inputtext p-component" style={{ flex: 1 }} />
+                        </div>
+
+                        <div className="p-field" style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                            <label htmlFor="art_id" style={{ marginRight: '1rem', width: '150px' }}>Art ID</label>
+                            <input id="art_id" name="art_id" value={newWein.art_id} onChange={handleInputChange} className="p-inputtext p-component" style={{ flex: 1 }} />
+                        </div>
                     </div>
-                    <div className="p-field">
-                        <label htmlFor="preis">Preis</label>
-                        <input id="preis" name="preis" value={newWein.preis} onChange={handleInputChange} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="weingut_id">Weingut ID</label>
-                        <input id="weingut_id" name="weingut_id" value={newWein.weingut_id} onChange={handleInputChange} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="typ_id">Typ ID</label>
-                        <input id="typ_id" name="typ_id" value={newWein.typ_id} onChange={handleInputChange} />
-                    </div>
-                    <div className="p-field">
-                        <label htmlFor="art_id">Art ID</label>
-                        <input id="art_id" name="art_id" value={newWein.art_id} onChange={handleInputChange} />
-                    </div>
-                    <Button type="submit" label="Submit" />
                 </form>
             </Dialog>
 

@@ -20,7 +20,7 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database1.db'  # Beispiel URI für SQLite
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database2.db'  # Beispiel URI für SQLite
     app.config['SECRET_KEY'] = os.urandom(24)  # Zum Signieren der Sitzungen
     db.init_app(app)
 

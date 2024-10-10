@@ -7,7 +7,7 @@ def initialize_routes(app, password_hash):
     from .wein.rebsorte import rebsorte_bp
     from .wein.typ import typ_bp
     from .wein.art import art_bp
-    
+    from .wein.fin import fin_bp
     from .auth.auth import auth_bp, init_auth
     
     init_auth(password_hash)
@@ -23,6 +23,7 @@ def initialize_routes(app, password_hash):
     app.register_blueprint(art_bp)
     
     app.register_blueprint(auth_bp)
+    app.register_blueprint(fin_bp) 
 # Später in app.py könntest du dies verwenden:
 # from routes import initialize_routes
 # initialize_routes(app)

@@ -1,14 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from 'primereact/button';
+import DropdownMenu from './Dropdownmenu'; 
 
-const Home = () => (
-    <div>
-        <h1>Home Page</h1>
-        <Link to="/menu">
-            <Button label="Go to Menu" />
-        </Link>
-    </div>
-);
+const Home = () => {
+    return (
+        <div>
+            <DropdownMenu />
+            <h1>Home Page</h1>
+        </div>
+    );
+};
 
 export default Home;

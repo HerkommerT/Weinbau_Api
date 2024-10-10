@@ -15,7 +15,7 @@ def get_all_fins():
             "wein_id": fin.wein_id,
             "typ_id": fin.typ_id,
             "art_id": fin.art_id,
-            "absatz": fin.absatz
+            "stückzahl": fin.stückzahl
         }
         for fin in fins
     ]
@@ -29,7 +29,7 @@ def create_fin():
         wein_id=data['wein_id'],
         typ_id=data['typ_id'],
         art_id=data['art_id'],
-        absatz=data['absatz']
+        stückzahl=data['stückzahl']
     )
     db.session.add(new_fin)
     db.session.commit()

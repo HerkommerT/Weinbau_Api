@@ -9,7 +9,7 @@ class Fin(db.Model):
     art_id = db.Column(db.Integer, db.ForeignKey('art.art_id'), primary_key=True)
     
     # Weitere Attribute
-    absatz = db.Column(db.Float, nullable=False)
+    stückzahl = db.Column(db.Integer, nullable=False)
     
     # Beziehungen
     wein = db.relationship('Wein', backref=db.backref('fins', lazy=True))

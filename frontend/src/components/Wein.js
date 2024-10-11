@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useWeinData } from '../hooks/useWeinData'; 
 import WeinForm from './WeinForm';  
 
-const Menu = () => {
+const Wein = () => {
     const { wein, fetchWeinList } = useWeinData();
     const [dialogVisible, setDialogVisible] = useState(false);
 
@@ -53,4 +53,4 @@ const Menu = () => {
     );
 };
 
-export default Menu;
+export default Wein;

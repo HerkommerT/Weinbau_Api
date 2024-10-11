@@ -25,7 +25,7 @@ def create_app():
     db.init_app(app)
 
     # Initialize CORS with default options (allow all origins)
-    CORS(app)
+    CORS(app, supports_credentials=True)
 
     # Import and register blueprints
     from routes import initialize_routes

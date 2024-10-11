@@ -5,6 +5,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import Home from './components/Home';
 import Wein from './components/Wein';
+import Login from './components/PrivateLogin';
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/wein" element={<Wein />} />
+                    <Route path="/finanzen" element={<Login />} />
                 </Routes>
             </div>
         </Router>

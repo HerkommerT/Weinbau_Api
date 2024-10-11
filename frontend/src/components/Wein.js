@@ -5,7 +5,9 @@ import { Column } from 'primereact/column';
 import { Toolbar } from 'primereact/toolbar';
 import { Link } from 'react-router-dom';
 import { useWeinData } from '../hooks/useWeinData'; 
+import { Card } from 'primereact/card';
 import WeinForm from './WeinForm';  
+import DropdownMenu from './Dropdownmenu';
 
 const Wein = () => {
     const { wein, fetchWeinList } = useWeinData();
@@ -27,7 +29,8 @@ const Wein = () => {
 
     return (
         <div>
-            <h1>Menu Page</h1>
+            <DropdownMenu />
+            <Card title="Wein Table"></Card>
             <Toolbar start={startToolbarTemplate} />
 
             <DataTable value={wein}>
@@ -46,10 +49,6 @@ const Wein = () => {
                 onClose={handleDialogClose} 
                 fetchWeinList={fetchWeinList} 
             />
-
-            <Link to="/">
-                <Button label="Go to Home" />
-            </Link>
         </div>
     );
 };

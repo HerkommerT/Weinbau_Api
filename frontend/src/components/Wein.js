@@ -32,6 +32,7 @@ const Wein = () => {
 
             <DataTable value={wein}>
                 <Column field="wein_id" header="Wein ID" />
+                <Column field="jahrgang" header="Jahrgang" />
                 <Column field="name" header="Name" />
                 <Column field="beschr" header="Beschreibung" />
                 <Column field="preis" header="Preis" />

@@ -6,9 +6,11 @@ Bilder:
 ![image](https://github.com/user-attachments/assets/fdb55644-6ed8-4c27-afc2-ed15dc7f65f8)
 
 fehlerhafte Anmeldung:
+
 ![image](https://github.com/user-attachments/assets/04755493-76b7-40fe-a85b-510baed6f338)
 
 erfolgreiche Anmeldung:
+
 ![image](https://github.com/user-attachments/assets/b423b64a-24ab-45fa-81d5-e94a3bd833a4)
 
 Curl:

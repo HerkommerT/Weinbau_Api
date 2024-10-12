@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
@@ -9,51 +9,17 @@ import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import DropdownMenu from './Dropdownmenu';
+import { useFin } from '../hooks/useFin';
 
-const App = () => {
-  const [password, setPassword] = useState('');
-  const [authenticated, setAuthenticated] = useState(false);
-  const [fins, setFins] = useState([]);
-  const [error, setError] = useState('');
-
-  const handleAuthentication = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:5000/auth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password }),
-        credentials: 'include',
-      });
-      if (response.ok) {
-        setAuthenticated(true);
-        setError('');
-        fetchFins();
-      } else {
-        throw new Error('Authentication failed');
-      }
-    } catch (error) {
-      setError('Authentication failed. Please try again.');
-    }
-  };
-
-  const fetchFins = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/private/fins', {
-        credentials: 'include',
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setFins(data);
-      } else {
-        throw new Error('Failed to fetch fins');
-      }
-    } catch (error) {
-      setError('Failed to fetch fins. Please try again.');
-    }
-  };
+const Fin = () => {
+  const {
+    password,
+    setPassword,
+    authenticated,
+    error,
+    fins,
+    handleAuthentication,
+  } = useFin();
 
   return (
     <div className="p-d-flex p-jc-center p-ai-center" style={{ height: '100vh' }}>
@@ -76,8 +42,8 @@ const App = () => {
           </form>
         ) : (
           <div>
-            <h2>Fins</h2>
-            <DataTable value={fins} responsiveLayout="scroll">
+            <DataTable value={fins} scrollable>
+              <Column field="id" header="ID" />
               <Column field="wein_id" header="Wein ID" />
               <Column field="typ_id" header="Typ ID" />
               <Column field="art_id" header="Art ID" />
@@ -91,4 +57,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Fin;

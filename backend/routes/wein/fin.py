@@ -13,6 +13,7 @@ def get_all_fins():
         fins = Fin.query.all()
         result = [
             {
+                'id': fin.id, 
                 "wein_id": fin.wein_id,
                 "typ_id": fin.typ_id,
                 "art_id": fin.art_id,

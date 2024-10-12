@@ -1,6 +1,7 @@
 # fin.py
 from flask import Blueprint, jsonify, request, session
 from models import db, Fin
+from sqlalchemy.orm import joinedload
 from extensions import db
 
 # Erstelle den Blueprint
@@ -10,17 +11,22 @@ fin_bp = Blueprint('fin', __name__)
 @fin_bp.route('/private/fins', methods=['GET'])
 def get_all_fins():
     if session.get('authenticated'):
-        fins = Fin.query.all()
+        fins = Fin.query.options(joinedload(Fin.wein)).all()
+        
+        # Berechnung des Absatzes und Hinzufügen zur Liste
         result = [
             {
-                'id': fin.id, 
-                "wein_id": fin.wein_id,
-                "typ_id": fin.typ_id,
-                "art_id": fin.art_id,
-                "stückzahl": fin.stückzahl
+                'id': fin.id,
+                'wein_id': fin.wein_id,
+                'typ_id': fin.typ_id,
+                'art_id': fin.art_id,
+                'stückzahl': fin.stückzahl,
+                'preis': fin.wein.preis if fin.wein else None,  # Preis des Weins über die Beziehung
+                'absatz': (fin.stückzahl * fin.wein.preis) if fin.wein else 0  # Berechnung des Absatzes
             }
             for fin in fins
         ]
+        
         return jsonify(result), 200
     else:
         return jsonify({"message": "Unauthorized access"}), 403

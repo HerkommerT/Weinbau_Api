@@ -48,6 +48,8 @@ const Fin = () => {
               <Column field="typ_id" header="Typ ID" />
               <Column field="art_id" header="Art ID" />
               <Column field="stückzahl" header="Stückzahl" />
+              <Column field="preis" header="Preis" />
+              <Column field="absatz" header="Absatz" />
             </DataTable>
           </div>
         )}
